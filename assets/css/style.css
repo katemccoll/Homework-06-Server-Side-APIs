@@ -1,6 +1,9 @@
 :root {
     --white: #ffffff;
     --navy: #2d3e50;
+    --grey: #bbbbbb;
+    --blue: #0076e4;
+    --blue-op: #319bfd9a;
 
 }
 
@@ -38,4 +41,30 @@ h5,
 h6 {
     margin: 0 0 0.5rem;
     line-height: 1.25;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    margin: 0.625rem 0;
+}
+
+input {
+    padding: 0.5rem;
+    background-color: var(--white);
+    font-size: 1.2rem;
+    border: 1px solid var(--grey);
+    border-radius: 0.3rem;
+}
+
+.searchBtn {
+    padding: 15px;
+    border-radius: 0.3rem;
+    color: var(--white);
+    background-color: var(--blue);
+    border: none;
+}
+
+.searchBtn:focus { 
+    outline: 2px solid paleturquoise;
 }

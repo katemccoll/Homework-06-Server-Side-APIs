@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./assets/css/jass.css" />
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
@@ -13,9 +16,18 @@
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    <div class="col-12 col-md-3 p3">
-        <h3>Search for City</h3>
-        <form id="search-form" class="mb-2"></form>
+    <div class="col-12 col-md-3 p-3 bg-light">
+        <h3>Search For A City:</h3>
+        <form>
+            <input id="search-form" type="text"></input>
+            <button class="searchBtn btn"><i class="fas fa-search"></i></button>
+        </form>
+
+        <div id="language-buttons" class="card-body">
+            <button data-language="javascript" class="btn">JavaScript</button>
+            <button data-language="html" class="btn">HTML</button>
+            <button data-language="css" class="btn">CSS</button>
+        </div>
     </div>
 
 
