@@ -1,7 +1,7 @@
 :root {
     --white: #ffffff;
     --navy: #2d3e50;
-    --grey: #bbbbbb;
+    --grey: #eeeeee;
     --blue: #0076e4;
     --blue-op: #319bfd9a;
 
@@ -27,6 +27,11 @@ header {
     color: var(--white);
 }
 
+main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 h1 {
     font-size: 2.25rem;
     display: block;
@@ -39,14 +44,19 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 0.5rem;
+
     line-height: 1.25;
 }
 
-form {
+.inline {
     display: flex;
-    width: 100%;
-    margin: 0.625rem 0;
+
+}
+
+aside {
+    background: var(--grey);
+    padding: 1rem;
+    width: 30%;
 }
 
 input {
@@ -57,7 +67,7 @@ input {
     border-radius: 0.3rem;
 }
 
-.searchBtn {
+#searchBtn {
     padding: 15px;
     border-radius: 0.3rem;
     color: var(--white);
@@ -65,6 +75,30 @@ input {
     border: none;
 }
 
-.searchBtn:focus { 
+#searchBtn:focus { 
     outline: 2px solid paleturquoise;
 }
+
+.container-style {
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid var(--grey);
+    border-radius: 0.3rem;
+}
+
+.iconSize {
+    height: 5rem;
+    width: 5rem;
+}
+
+.card-body {
+    display: grid;
+}
+
+.btn {
+    padding: 0.5rem;
+    background-color: var(--white);
+    font-size: 1.2rem;
+    border: 1px solid var(--grey);
+}
+

@@ -20,6 +20,23 @@
 
 /* FLEX CONTENT */
 
+.display-flex {
+    display: flex;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+[class*='col-'] {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
 .col-9 {
     flex: 0 0 75%;
     max-width: 75%;
@@ -48,7 +65,15 @@
 @media screen and (min-width: 768px) {
     .col-md-3 {
         flex: 0 0 25%;
-        max-width: 25%;
+        max-width: 30%;
       }
+    .col-md-8 {
+        flex: 0 0 66.66667%;
+        max-width: 66.66667%;
+    }
+    .col-md-9 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
 
 }
