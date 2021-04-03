@@ -1,6 +1,5 @@
 const apiKey = "8df2a6f60b13333188f598a84ecd3bf3";
 
-
 let searchBtnEl = document.getElementById("searchBtn");
 let cityNameEl = document.getElementById("city-name");
 let cityDateEl = document.getElementById("date");
@@ -25,15 +24,15 @@ if (storedCities !== null) {
 // API
 
 function getWeather(cityName) {
-    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey;
+    let weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey;
 
-    fetch(apiUrl)
+    fetch(weatherApiUrl)
         .then(function (response) {
             console.log("First promise");
             if (response.ok) {
                 return response.json();
             } else {
-                return Promise.reject("Failed to retrieve data for: '" + cityName + "'");
+                return Promise.reject("Failed to retrieve weather data for: '" + cityName + "'");
             }
         }).then(function (data) {
             console.log("Got our JSON data");
@@ -53,6 +52,25 @@ function getWeather(cityName) {
             windEl.innerHTML = "Wind-speed: " + speedMph + "mph";
             let currentWeatherStyle = document.getElementById("current-weather");
             currentWeatherStyle.classList.add("container-style");
+
+            let lon = data.coord.lon;
+            let lat = data.coord.lat;
+            let forecastApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alert&APPID=" + apiKey;
+            return fetch(forecastApiUrl)
+                .then(function (response) {
+                    console.log("forecast promise")
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return Promise.reject("Failed to retrive forecast data for: '" + cityName + "'");
+                    }
+
+                }).then(function (data) {
+                    console.log(data);
+            //        City's forecast for the next 5 days
+
+
+                });
 
         }).catch(function () {
             console.log("catch");
