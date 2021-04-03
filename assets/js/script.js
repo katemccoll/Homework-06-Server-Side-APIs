@@ -1,17 +1,13 @@
 const apiKey = "8df2a6f60b13333188f598a84ecd3bf3";
 
-let searchBtnEl = document.getElementById("searchBtn");
-let cityNameEl = document.getElementById("city-name");
-let cityDateEl = document.getElementById("date");
-let weatherIconEl = document.getElementById("weather-icon")
-let temptEl = document.getElementById("temperature");
-let humidityEl = document.getElementById("humidity");
-let windEl = document.getElementById("wind-speed");
-let uvEl = document.getElementById("UV-index");
+
+
+let uvEl = $("#UV-index");
+
+let card = $(".card").clone();
 
 
 let cities = "";
-let date = moment().format("L")
 
 // Storage
 let STORAGE_CITY_KEY = "city-list";
@@ -38,20 +34,24 @@ function getWeather(cityName) {
             console.log("Got our JSON data");
             console.log(data);
             // City's forecast for the day
-            cityNameEl.innerHTML = cityName + " ";
-            let cityDate = new Date((data.dt) * 1000);
-            cityDateEl.innerHTML = cityDate.toDateString();
+            $("#city-name").append(cityName + " ");
+            // Date in City
+            let date_ob = new Date((data.dt) * 1000);
+            let year = date_ob.getFullYear();
+            let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+            let date = ("0" + date_ob.getDate()).slice(-2);
+            $("#date").append("(" + date + "/" + month + "/" + year + ")");
+
             let weatherIcon = data.weather[0].icon;
             let iconUrl = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
-            weatherIconEl.setAttribute("src", iconUrl);
-            weatherIconEl.classList.add("iconSize");
+            $("#weather-icon").attr("src", iconUrl);
+            $("#weather-icon").addClass("iconSize");
             let celsiusTemp = convertTemp(data.main.temp).toFixed(1);
-            temptEl.innerHTML = "Temperature: " + celsiusTemp + String.fromCharCode(176) + "C";
-            humidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
+            $("#temperature").append("Temperature: " + celsiusTemp + String.fromCharCode(176) + "C");
+            $("#humidity").append("Humidity: " + data.main.humidity + "%");
             let speedMph = convertSpeed(data.wind.speed).toFixed(1);
-            windEl.innerHTML = "Wind-speed: " + speedMph + "mph";
-            let currentWeatherStyle = document.getElementById("current-weather");
-            currentWeatherStyle.classList.add("container-style");
+            $("#wind-speed").append("Wind-speed: " + speedMph + "mph");
+            $("#current-weather").addClass("container-style");
 
             let lon = data.coord.lon;
             let lat = data.coord.lat;
@@ -65,15 +65,32 @@ function getWeather(cityName) {
                         return Promise.reject("Failed to retrive forecast data for: '" + cityName + "'");
                     }
 
-                }).then(function (data) {
-                    console.log(data);
-            //        City's forecast for the next 5 days
-
-
                 });
 
-        }).catch(function () {
+        }).then(function (data) {
+            console.log(data);
+         //        City's forecast for the next 5 days
+            let forecastTitleEl = document.getElementById("forecast-title");
+            $("#forecast-title").append("5-Day Forecast:");
+            $(".card").remove();
+
+            for (let i = 1; i < 5; i++) {
+                let forecastCard = card.clone();
+                let forecast = data.daily[i];
+                let date = new Date((forecast.dt) * 1000);
+                let forecastDate = date.toDateString();
+                forecastCard.find(".forecast-date").append(forecastDate);
+                forecastCard.appendTo(".forecast-container");
+
+
+
+
+            }
+
+
+        }).catch(function (error) {
             console.log("catch");
+            console.log(error);
         })
         .finally(function () {
             console.log("Promise is done");
@@ -95,7 +112,7 @@ function convertSpeed (speedMs) {
 
 // Search Button
 
-searchBtnEl.addEventListener("click", function () {
+$("#searchBtn").click(function () {
     let city = document.getElementById("search-city").value;
     getWeather(city);
     // searchHistory.push(city);
