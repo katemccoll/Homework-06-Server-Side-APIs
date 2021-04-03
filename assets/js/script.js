@@ -4,7 +4,7 @@ const apiKey = "8df2a6f60b13333188f598a84ecd3bf3";
 
 let uvEl = $("#UV-index");
 
-let card = $(".card").clone();
+let card = $("#forecast-card").clone();
 
 
 let cities = "";
@@ -14,6 +14,15 @@ let STORAGE_CITY_KEY = "city-list";
 let storedCities = localStorage.getItem(STORAGE_CITY_KEY);
 if (storedCities !== null) {
     cities = JSON.parse(storedCities);
+}
+
+
+function convertDtToString(dt) {
+    let date_ob = new Date(dt * 1000);
+    let year = date_ob.getFullYear();
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    return "(" + date + "/" + month + "/" + year + ")";    
 }
 
 
@@ -36,21 +45,17 @@ function getWeather(cityName) {
             // City's forecast for the day
             $("#city-name").append(cityName + " ");
             // Date in City
-            let date_ob = new Date((data.dt) * 1000);
-            let year = date_ob.getFullYear();
-            let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-            let date = ("0" + date_ob.getDate()).slice(-2);
-            $("#date").append("(" + date + "/" + month + "/" + year + ")");
+            $("#date").append(convertDtToString(data.dt));
 
             let weatherIcon = data.weather[0].icon;
             let iconUrl = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
             $("#weather-icon").attr("src", iconUrl);
             $("#weather-icon").addClass("iconSize");
-            let celsiusTemp = convertTemp(data.main.temp).toFixed(1);
-            $("#temperature").append("Temperature: " + celsiusTemp + String.fromCharCode(176) + "C");
+            let celsiusTemperature = convertTemp(data.main.temp).toFixed(1);
+            $("#temperature").append("Temperature: " + celsiusTemperature + " " + String.fromCharCode(176) + "C");
             $("#humidity").append("Humidity: " + data.main.humidity + "%");
             let speedMph = convertSpeed(data.wind.speed).toFixed(1);
-            $("#wind-speed").append("Wind-speed: " + speedMph + "mph");
+            $("#wind-speed").append("Wind-speed: " + speedMph + " km/h");
             $("#current-weather").addClass("container-style");
 
             let lon = data.coord.lon;
@@ -72,14 +77,25 @@ function getWeather(cityName) {
          //        City's forecast for the next 5 days
             let forecastTitleEl = document.getElementById("forecast-title");
             $("#forecast-title").append("5-Day Forecast:");
-            $(".card").remove();
 
-            for (let i = 1; i < 5; i++) {
+            $("#forecast-card").remove();
+
+            for (let i = 1; i < 6; i++) {
                 let forecastCard = card.clone();
                 let forecast = data.daily[i];
-                let date = new Date((forecast.dt) * 1000);
-                let forecastDate = date.toDateString();
-                forecastCard.find(".forecast-date").append(forecastDate);
+                forecastCard.find(".forecast-date").append(convertDtToString(forecast.dt));
+                forecastCard.addClass("card")
+                let forecastIcon = forecast.weather[0].icon;
+                let forecastIconUrl = "https://openweathermap.org/img/wn/" + forecastIcon + ".png";
+                forecastCard.find("#forecast-icon").attr("src", forecastIconUrl);
+                forecastCard.find("#forecast-icon").addClass("iconSize");
+
+                let celsiusTemp = convertTemp(forecast.temp.max).toFixed(1);
+                forecastCard.find("#forecast-temp").append("Temp: " + celsiusTemp + " " + String.fromCharCode(176) + "C");
+                forecastCard.find("#forecast-humidity").append("Humidity: " + forecast.humidity + "%");
+
+
+
                 forecastCard.appendTo(".forecast-container");
 
 
@@ -99,6 +115,8 @@ function getWeather(cityName) {
     console.log("Fetch queued");
 }
 
+
+
 // function searchHistory() {
 
 // }
@@ -107,7 +125,7 @@ function convertTemp (kelvin) {
     return kelvin - 273.15;
 }
 function convertSpeed (speedMs) {
-    return speedMs * 2.237;
+    return speedMs * 3.6;
 }
 
 // Search Button

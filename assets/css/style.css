@@ -91,8 +91,16 @@ input {
     width: 5rem;
 }
 
-.card-body {
-    display: grid;
+.forecast-container {
+    display: flex;
+}
+
+.card {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    background-color: var(--blue);
+    color: var(--white)
 }
 
 .btn {
