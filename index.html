@@ -16,18 +16,21 @@
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    <main>
-        <section class="row">
-            <aside class="col">
+    <main class="row">
+        <section  class="col-6 col-md-4 p-0">
+            <aside>
                 <h3>Search for a City:</h3>
                 <div class="inline">
                     <input id="search-city" type="text"/>
                     <button id="searchBtn"><i class="fas fa-search"></i></button>
                 </div>
-                <div class="search-history search-history-button"></div>
+                <div id="search-history"></div>
             </aside>
+        </section>
 
-            <div id="current-weather" class="col-9 col-md-9">
+
+        <section class="col hide">
+            <div id="current-weather" class="col-12 col-md-8">
                 <div class="display-flex">
                     <h2><span id="city-name"></span><span id="date"></span></h2>
                     <img id="weather-icon"/>
@@ -35,11 +38,11 @@
                 <p id="temperature"></p>
                 <p id="humidity"></p>
                 <p id="wind-speed"></p>
-                <p id="UV-index-title"><span id="UV-index-number"></span></p>
+                <p>UV Index: <span id="UV-index-number"></span></p>
             </div>
-        </section>
-        <section>
-            <h3><span id="forecast-title"></span></h3>
+
+            <div class="col-12 col-md-8">
+                <h3 class="pl-1">5-Day Forecast:</h3>
                 <div class="forecast-container">
 
                     <div id="forecast-card">
@@ -49,6 +52,8 @@
                         <p id="forecast-humidity"></p>
                     </div>
                 </div>
+            </div>
+
         </section>
 
 

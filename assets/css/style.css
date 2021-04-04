@@ -16,9 +16,9 @@
 
 
 body{
-    margin: 0px;
+    margin: 0;
     font-size: 16px;
-    padding: 0px;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 }
@@ -59,7 +59,6 @@ h6 {
 aside {
     background: var(--grey);
     padding: 1rem;
-    width: 30%;
 }
 
 input {
@@ -82,11 +81,28 @@ input {
     outline: 2px solid paleturquoise;
 }
 
+#search-history {
+    display: grid;
+    text-align-last: justify;
+    margin-top: 1rem;
+}
+#search-history button {
+    padding: 1.5rem;
+    background-color: var(--white);
+    font-size: 1.2rem;
+    border: 1px solid var(--grey);
+    border-radius: 0.3rem;
+}
+
 .container-style {
     margin: 15px;
     padding: 10px;
     border: 1px solid var(--grey);
     border-radius: 0.3rem;
+}
+
+.hide {
+    display: none;
 }
 
 .iconSize {
@@ -122,7 +138,7 @@ input {
 
 .card {
     padding: 1rem;
-    margin: 1rem;
+    margin: 1rem 0 1rem 1rem;
     border-radius: 0.3rem;
     background-color: var(--blue);
     color: var(--white)

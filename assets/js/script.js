@@ -2,18 +2,16 @@ const apiKey = "8df2a6f60b13333188f598a84ecd3bf3";
 
 
 
-let uvEl = $("#UV-index");
-
 let card = $("#forecast-card").clone();
 
 
-let cities = "";
+let searchHistory = [];
 
 // Storage
 let STORAGE_CITY_KEY = "city-list";
 let storedCities = localStorage.getItem(STORAGE_CITY_KEY);
 if (storedCities !== null) {
-    cities = JSON.parse(storedCities);
+    searchHistory = JSON.parse(storedCities);
 }
 
 
@@ -29,7 +27,9 @@ function convertDtToString(dt) {
 // API
 
 function getWeather(cityName) {
+    $(".hide").removeClass("hide");
     let weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey;
+
 
     fetch(weatherApiUrl)
         .then(function (response) {
@@ -43,19 +43,19 @@ function getWeather(cityName) {
             console.log("Got our JSON data");
             console.log(data);
             // City's forecast for the day
-            $("#city-name").append(cityName + " ");
+            $("#city-name").html(cityName + " ");
             // Date in City
-            $("#date").append(convertDtToString(data.dt));
+            $("#date").html(convertDtToString(data.dt));
 
             let weatherIcon = data.weather[0].icon;
             let iconUrl = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
             $("#weather-icon").attr("src", iconUrl);
             $("#weather-icon").addClass("iconSize");
             let celsiusTemperature = convertTemp(data.main.temp).toFixed(1);
-            $("#temperature").append("Temperature: " + celsiusTemperature + " " + String.fromCharCode(176) + "C");
-            $("#humidity").append("Humidity: " + data.main.humidity + "%");
+            $("#temperature").html("Temperature: " + celsiusTemperature + " " + String.fromCharCode(176) + "C");
+            $("#humidity").html("Humidity: " + data.main.humidity + "%");
             let speedMph = convertSpeed(data.wind.speed).toFixed(1);
-            $("#wind-speed").append("Wind-speed: " + speedMph + " km/h");
+            $("#wind-speed").html("Wind-speed: " + speedMph + " km/h");
             $("#current-weather").addClass("container-style");
 
 
@@ -76,10 +76,10 @@ function getWeather(cityName) {
 
         }).then(function (data) {
             console.log(data);
-            $("#UV-index-title").prepend("UV Index: ");
+
             let uvIndex = data.daily[0].uvi;
             $("#UV-index-number").removeClass();
-            $("#UV-index-number").append( uvIndex);
+            $("#UV-index-number").html(uvIndex);
             if (uvIndex <= 2.5) {
                 $("#UV-index-number").addClass("favorable");
             } else if (uvIndex >= 5.5) {
@@ -89,9 +89,9 @@ function getWeather(cityName) {
             }
          //        City's forecast for the next 5 days
 
-            $("#forecast-title").append("5-Day Forecast:");
 
             $("#forecast-card").remove();
+            $(".forecast-container").html("");
 
             for (let i = 1; i < 6; i++) {
                 let forecastCard = card.clone();
@@ -130,9 +130,22 @@ function getWeather(cityName) {
 
 
 
-// function searchHistory() {
+function displaySearchHistory() {
+    let historyContainer = $("#search-history");
+    historyContainer.find("button").remove();
+    searchHistory.forEach(function (city) {
+        let historyButton = $("<button></button>");
+        historyButton.append(city);
+        historyButton.appendTo(historyContainer);
+        historyButton.click(function () {
+            getWeather(city);
+        });
 
-// }
+    });
+
+}
+
+
 
 function convertTemp (kelvin) {
     return kelvin - 273.15;
@@ -144,9 +157,16 @@ function convertSpeed (speedMs) {
 // Search Button
 
 $("#searchBtn").click(function () {
+
     let city = document.getElementById("search-city").value;
     getWeather(city);
-    // searchHistory.push(city);
-    // localStorage.setItem(STORAGE_CITY_KEY, JSON.stringify(searchHistory));
+    searchHistory.unshift(city);
+    searchHistory.splice(6);
+    displaySearchHistory();
+    localStorage.setItem(STORAGE_CITY_KEY, JSON.stringify(searchHistory));
 
+});
+
+$("#search-city").click(function (event) {
+    event.preventDefault()
 });
