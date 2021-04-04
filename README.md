@@ -113,7 +113,7 @@ So to help people (mostly me, so I don't get confused), I have added the country
 When the page loads, the user will be presented with their chosen city's weather. Within this section is the search bar for the user to enter their chosen city.
 Once the search button is clicked, their chosen city's forecast will appear. The main section is for the current day, then below is a 5-day forecast. Their city is also saved to search history (this is below the search bar). That means if the user looks up multiple cities, they can easily go back to one by clicking on the name. If the user exits out of the window and reloads the page, their search history will still be there. This will save the user time if they constantly look up their favourite cities.
 
-Link: 
+Link: https://katemccoll.github.io/Weather_Dashboard/
 
 ![Finished](assets/images/Finished.JPG)
 
