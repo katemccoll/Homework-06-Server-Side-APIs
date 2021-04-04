@@ -58,9 +58,11 @@ function getWeather(cityName) {
             $("#wind-speed").append("Wind-speed: " + speedMph + " km/h");
             $("#current-weather").addClass("container-style");
 
+
             let lon = data.coord.lon;
             let lat = data.coord.lat;
             let forecastApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alert&APPID=" + apiKey;
+
             return fetch(forecastApiUrl)
                 .then(function (response) {
                     console.log("forecast promise")
@@ -74,8 +76,19 @@ function getWeather(cityName) {
 
         }).then(function (data) {
             console.log(data);
+            $("#UV-index-title").prepend("UV Index: ");
+            let uvIndex = data.daily[0].uvi;
+            $("#UV-index-number").removeClass();
+            $("#UV-index-number").append( uvIndex);
+            if (uvIndex <= 2.5) {
+                $("#UV-index-number").addClass("favorable");
+            } else if (uvIndex >= 5.5) {
+                $("#UV-index-number").addClass("severe");
+            } else {
+                $("#UV-index-number").addClass("moderate");
+            }
          //        City's forecast for the next 5 days
-            let forecastTitleEl = document.getElementById("forecast-title");
+
             $("#forecast-title").append("5-Day Forecast:");
 
             $("#forecast-card").remove();

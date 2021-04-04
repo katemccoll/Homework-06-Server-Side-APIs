@@ -4,6 +4,9 @@
     --grey: #eeeeee;
     --blue: #0076e4;
     --blue-op: #319bfd9a;
+    --green: #00ff00;
+    --yellow: #ffff00;
+    --red: #ff0000;
 
 }
 
@@ -89,6 +92,28 @@ input {
 .iconSize {
     height: 5rem;
     width: 5rem;
+}
+
+.favorable {
+    background-color: var(--green);
+    border-radius: 0.3rem;
+    padding: 0.4rem;
+    border: 1px solid var(--green);
+}
+
+
+.severe {
+    background-color: var(--red);
+    border-radius: 0.3rem;
+    padding: 0.4rem;
+    border: 1px solid var(--red);
+}
+
+.moderate {
+    background-color: var(--yellow);
+    border-radius: 0.3rem;
+    padding: 0.4rem;
+    border: 1px solid var(--yellow);
 }
 
 .forecast-container {
