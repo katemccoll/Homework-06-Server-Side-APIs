@@ -44,7 +44,7 @@ function getWeather(cityName) {
             console.log("Got our JSON data");
             console.log(data);
             // City's forecast for the day
-            $("#city-name").html(cityName + ", " + data.sys.country + " ");
+            $("#city-name").html(data.name + ", " + data.sys.country + " ");
             // Date in City
             $("#date").html(convertDtToString(data.dt));
 
@@ -160,6 +160,9 @@ function convertSpeed (speedMs) {
 $("#searchBtn").click(function () {
 
     let city = document.getElementById("search-city").value;
+    if (city === "") {
+        return;
+    }
     getWeather(city);
     searchHistory.unshift(city);
     searchHistory.splice(6);
