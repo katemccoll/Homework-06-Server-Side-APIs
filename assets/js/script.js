@@ -7,6 +7,7 @@ let card = $("#forecast-card").clone();
 
 let searchHistory = [];
 
+
 // Storage
 let STORAGE_CITY_KEY = "city-list";
 let storedCities = localStorage.getItem(STORAGE_CITY_KEY);
@@ -43,7 +44,7 @@ function getWeather(cityName) {
             console.log("Got our JSON data");
             console.log(data);
             // City's forecast for the day
-            $("#city-name").html(cityName + " ");
+            $("#city-name").html(cityName + ", " + data.sys.country + " ");
             // Date in City
             $("#date").html(convertDtToString(data.dt));
 
@@ -170,3 +171,5 @@ $("#searchBtn").click(function () {
 $("#search-city").click(function (event) {
     event.preventDefault()
 });
+
+displaySearchHistory();
