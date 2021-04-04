@@ -61,7 +61,7 @@
 
 
 /* col-md */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
     .col-md-3 {
         flex: 0 0 25%;
         max-width: 30%;
