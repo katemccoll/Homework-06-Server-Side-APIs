@@ -21,14 +21,14 @@ function convertDtToString(dt) {
     let year = date_ob.getFullYear();
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
     let date = ("0" + date_ob.getDate()).slice(-2);
-    return "(" + date + "/" + month + "/" + year + ")";    
+    return "(" + date + "/" + month + "/" + year + ")";
 }
 
 
 // API
 
 function getWeather(cityName) {
-    $(".hide").removeClass("hide");
+
     let weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey;
 
 
@@ -108,16 +108,12 @@ function getWeather(cityName) {
                 forecastCard.find("#forecast-temp").append("Temp: " + celsiusTemp + " " + String.fromCharCode(176) + "C");
                 forecastCard.find("#forecast-humidity").append("Humidity: " + forecast.humidity + "%");
 
-
-
                 forecastCard.appendTo(".forecast-container");
-
-
 
 
             }
 
-
+            $(".hide").removeClass("hide");
         }).catch(function (error) {
             console.log("catch");
             console.log(error);
