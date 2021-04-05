@@ -1,9 +1,8 @@
 const apiKey = "8df2a6f60b13333188f598a84ecd3bf3";
 
-let card = $("#forecast-card").clone();
+let cardTemplate = $("#forecast-card").clone();
 
 let searchHistory = [];
-
 
 // Storage
 let STORAGE_CITY_KEY = "city-list";
@@ -11,7 +10,6 @@ let storedCities = localStorage.getItem(STORAGE_CITY_KEY);
 if (storedCities !== null) {
     searchHistory = JSON.parse(storedCities);
 }
-
 
 function convertDtToString(dt) {
     let date_ob = new Date(dt * 1000);
@@ -22,27 +20,24 @@ function convertDtToString(dt) {
 }
 
 
-// API
-
+// Use OpenWeatherMap's API to get the city's weather forecast.
 function getWeather(cityName) {
-
     let weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey;
 
-
-    fetch(weatherApiUrl)
-        .then(function (response) {
-            console.log("First promise");
-            if (response.ok) {
-                return response.json();
-            } else {
-                return Promise.reject("Failed to retrieve weather data for: '" + cityName + "'");
-            }
-        }).then(function (data) {
+    // Get the city's current weather.
+    fetch(weatherApiUrl).then(function (response) {
+        console.log("First promise");
+        if (response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject("Failed to retrieve weather data for: '" + cityName + "'");
+        }
+    }).then(function (data) {
+        // Handle the city's current weather
         console.log("Got our JSON data");
         console.log(data);
-        // City's forecast for the day
+
         $("#city-name").html(data.name + ", " + data.sys.country + " ");
-        // Date in City
         $("#date").html(convertDtToString(data.dt));
 
         let weatherIcon = data.weather[0].icon;
@@ -56,11 +51,10 @@ function getWeather(cityName) {
         $("#wind-speed").html("Wind-speed: " + speedMph + " km/h");
         $("#current-weather").addClass("container-style");
 
-
+        // Get the forecast for the next 7 days.
         let lon = data.coord.lon;
         let lat = data.coord.lat;
         let forecastApiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alert&APPID=" + apiKey;
-
         return fetch(forecastApiUrl)
             .then(function (response) {
                 console.log("forecast promise")
@@ -69,9 +63,7 @@ function getWeather(cityName) {
                 } else {
                     return Promise.reject("Failed to retrive forecast data for: '" + cityName + "'");
                 }
-
             });
-
     }).then(function (data) {
         console.log(data);
 
@@ -85,14 +77,14 @@ function getWeather(cityName) {
         } else {
             $("#UV-index-number").addClass("moderate");
         }
-        //        City's forecast for the next 5 days
-
 
         $("#forecast-card").remove();
         $(".forecast-container").html("");
 
+        // We get the forecast for the current day, and the next 7 days, so 8 in total. We only care about the next
+        // 5 days so we only process them.
         for (let i = 1; i < 6; i++) {
-            let forecastCard = card.clone();
+            let forecastCard = cardTemplate.clone();
             let forecast = data.daily[i];
             forecastCard.find(".forecast-date").append(convertDtToString(forecast.dt));
             forecastCard.addClass("card")
@@ -106,18 +98,15 @@ function getWeather(cityName) {
             forecastCard.find("#forecast-humidity").append("Humidity: " + forecast.humidity + "%");
 
             forecastCard.appendTo(".forecast-container");
-
-
         }
 
+        // Now that all the data is ready, we can show our elements.
         $(".hide").removeClass("hide");
     }).catch(function (error) {
-        console.log("catch");
         console.log(error);
-    })
-        .finally(function () {
-            console.log("Promise is done");
-        });
+    }).finally(function () {
+        console.log("Promise is done");
+    });
 
     console.log("Fetch queued");
 }
@@ -133,9 +122,7 @@ function displaySearchHistory() {
         historyButton.click(function () {
             getWeather(city);
         });
-
     });
-
 }
 
 
@@ -146,8 +133,6 @@ function convertTemp(kelvin) {
 function convertSpeed(speedMs) {
     return speedMs * 3.6;
 }
-
-// Search Button
 
 $("#searchBtn").click(function () {
 
