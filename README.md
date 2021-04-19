@@ -1,7 +1,7 @@
 # Weather Dashboard
 Live link: https://katemccoll.github.io/Weather_Dashboard/
 
-Technologies used: Third-party API - OpenWeather, jQuery UI, jQuery, JavaScript, CSS, HTML.
+Technologies used: jQuery, JavaScript, CSS, HTML.
 
 This website allows you to check the weather and forecast of any city in the world. This site has a local storage to quickly access your search history.
 
