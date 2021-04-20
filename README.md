@@ -81,23 +81,23 @@ I came across a 7 day forecast. Here it had a daily forecast and wasn't complica
 Now that I had my 5 days, I wanted to check to make sure the loop was working correctly.
 
 
-![Creating Loop](assets/images/Adding Forecast.JPG)
+![Creating Loop](assets/images/Adding-Forecast.JPG)
 
 Once I had that, I knew filling out the rest of the card would be fine. I then thought that I would take some time to fix the format of the date. I did this by creating a function that converted the time stamp to a string. Within this, I was able to collect the data for the date, month and year and put it into the format I wanted.
 
-![Completed Cards](assets/images/Cards Completed.JPG)
+![Completed Cards](assets/images/Cards-Completed.JPG)
 
 Cards are completed! Next I decided to tackle the UV Index. I originally thought I would have to get a different url for this too, but then  I found it in one of the paths. It was labelled as uvi, which I think I missed the first time as I was looking for the word index while I was skimming over. Lesson learnt: Take your time reading Kate!
 With the index done, I moved on to colour coding the index. With this, I used an if statement to say if it was between certain numbers, then go to this colour. Severe is red, moderate is yellow and favourable I made green.
 
-![UV Index](assets/images/UV Index.JPG)
+![UV Index](assets/images/UV-Index.JPG)
 
 ## Search History
 
 Local storage time! Once again, we have done this a few times now, do I was pretty confident with what I had to do here. Within my JS, with each city that was search, I saved and added a button. This way, once the user clicks the button, it will go directly to that city.
 I made a list that is 6 buttons long. I decided to do this as I wanted the list to show when the user refreshes the page or comes back to it after using the website. If I did not shorten the list, it would just carry on forever. No one wants that.
 
-![Search History](assets/images/Search History.JPG)
+![Search History](assets/images/Search-History.JPG)
 
 ## Country Issues!
 
@@ -105,7 +105,7 @@ While I was testing may code to see if it worked, I was only checking Dunedin's 
 I checked my data to see what was happening and saw that it was in the America timezone! I checked Hamilton and yes, it was not New Zealand's Hamilton. 
 So to help people (mostly me, so I don't get confused), I have added the country. So if the user looks up Melbourne, they can see what country they looked up. To get Australia, all the user needs to do is add ", AU" to the end. This will take you to the correct Melbourne.
 
-![Adding Country](assets/images/Adding Country.JPG)
+![Adding Country](assets/images/Adding-Country.JPG)
 
 # Results
 
